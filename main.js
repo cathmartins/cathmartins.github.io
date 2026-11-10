@@ -23,6 +23,7 @@
   const img = (slug, file) => `images/projetos/${slug}/${file}`;
   const paras = (s) => String(s).split(/\n\s*\n/).map((p) => `<p>${p.trim()}</p>`).join("");
   const ext = 'target="_blank" rel="noopener"';
+  const bySlugs = (list) => (list || []).map((s) => PROJETOS.find((p) => p.slug === s)).filter(Boolean);
 
   /* ícone de conversa usado no link do WhatsApp */
   const ICON_CHAT = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5v-8A2.5 2.5 0 0 1 6.5 3z"/><circle cx="8.5" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="9.5" r="1" fill="currentColor" stroke="none"/></svg>`;
@@ -77,18 +78,17 @@
     <a class="card reveal" style="--d:${i % 3}" href="projeto.html?p=${p.slug}" data-cat="${p.categoria}">
       <div class="card-media">
         <img src="${img(p.slug, "capa.jpg")}" alt="${p.nome}" loading="lazy">
+        <div class="card-info">
+          <h3 class="card-title">${p.nome}</h3>
+          <p class="card-concept">(${L(p.conceito)})</p>
+        </div>
       </div>
-      <h3 class="card-title">${p.nome}</h3>
-      <p class="card-concept">${L(p.conceito)}</p>
     </a>`;
   }
 
   /* ---------- banner rotativo ---------- */
   function banner() {
-    const lista = (typeof BANNER !== "undefined" && BANNER.length)
-      ? BANNER
-      : PROJETOS.filter((p) => p.destaque).slice(0, 4).map((p) => p.slug);
-    const slides = lista.map((s) => PROJETOS.find((p) => p.slug === s)).filter(Boolean);
+    const slides = typeof BANNER !== "undefined" ? bySlugs(BANNER) : PROJETOS.slice(0, 4);
     const first = slides[0];
     const dots = slides.length > 1
       ? `<div class="dots">${slides.map((p, i) =>
@@ -112,7 +112,7 @@
 
   /* ---------- páginas ---------- */
   function pageHome() {
-    const dest = PROJETOS.filter((p) => p.destaque);
+    const dest = typeof HOME !== "undefined" ? bySlugs(HOME) : PROJETOS.slice(0, 6);
     return `
     ${banner()}
     <section class="intro">
@@ -124,7 +124,7 @@
         <h2 class="h2">${t().selecionados}</h2>
         <a class="link-arrow" href="projetos.html">${t().verTodos} (${PROJETOS.length}) →</a>
       </div>
-      <div class="grid grid--2">${dest.map(card).join("")}</div>
+      <div class="grid grid--3">${dest.map(card).join("")}</div>
     </section>`;
   }
 
@@ -286,12 +286,4 @@
   function render() {
     clearInterval(bannerTimer); bannerTimer = null;
     document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
-    const views = { home: pageHome, projetos: pageProjetos, projeto: pageProjeto, sobre: pageSobre };
-    const view = views[page] || pageHome;
-    document.getElementById("app").innerHTML =
-      '<div id="top"></div>' + header() + `<main id="main">${view()}</main>` + footer();
-    initImages(); initBanner(); initFilters(); initReveal(); initLang();
-  }
-
-  render();
-})();
+    const views = { home: pageHome, projetos:
