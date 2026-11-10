@@ -18,10 +18,13 @@ const SITE = {
   local: { pt: "Minas Gerais, Brasil", en: "Minas Gerais, Brazil" },
 };
 
-/* BANNER DA HOME: projetos que giram no topo, nesta ordem.
+/* BANNER DA HOME: projetos que giram no topo, nesta ordem (troca a cada 5 s).
    Imagem de cada um: images/projetos/<slug>/banner.jpg
    (horizontal, ex.: 2400 × 1350). Se não existir, usa a capa.jpg. */
-const BANNER = ["cepera", "minascentro", "maralto", "memorial-brumadinho"];
+const BANNER = ["cepera", "tottus", "memorial-brumadinho", "lovlity"];
+
+/* PROJETOS SELECIONADOS DA HOME, nesta ordem. */
+const HOME = ["tottus", "cepera", "minascentro", "memorial-brumadinho", "ipanema-queijos", "livro-pardini"];
 
 const UI = {
   pt: {
@@ -86,61 +89,61 @@ const UI = {
   },
 };
 
-/* PROJETOS
+/* PROJETOS (é nesta ordem que aparecem na página Projetos)
    slug      → nome da pasta em images/projetos/ (sem acento nem espaço)
    categoria → "branding", "editorial" ou "embalagem"
-   destaque  → true = aparece na home
-   conceito  → a linha que aparece embaixo do nome
+   conceito  → o texto entre parênteses que aparece na capa
    galeria   → quantas imagens o case tem (01.jpg, 02.jpg...)
+   Capa: images/projetos/<slug>/capa.jpg (ideal 1800 × 1400)
    Para separar parágrafos no texto, use \n\n                          */
 
 const PROJETOS = [
-  { slug: "cepera", nome: "Cepêra", categoria: "branding", ano: "20XX", destaque: true, galeria: 4,
+  { slug: "cepera", nome: "Cepêra", categoria: "branding", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Identidade Visual", en: "Visual Identity" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "tottus", nome: "Tottus", categoria: "branding", ano: "20XX", destaque: false, galeria: 4,
+  { slug: "tottus", nome: "Tottus", categoria: "branding", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Identidade Visual", en: "Visual Identity" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "lovlity", nome: "LOVLITY", categoria: "branding", ano: "20XX", destaque: false, galeria: 4,
+  { slug: "lovlity", nome: "LOVLITY", categoria: "branding", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Identidade Visual", en: "Visual Identity" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "minascentro", nome: "Minascentro", categoria: "branding", ano: "20XX", destaque: true, galeria: 4,
+  { slug: "minascentro", nome: "Minascentro", categoria: "branding", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Identidade Visual", en: "Visual Identity" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "maralto", nome: "Maralto", categoria: "branding", ano: "20XX", destaque: true, galeria: 4,
+  { slug: "maralto", nome: "Maralto", categoria: "branding", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Identidade Visual", en: "Visual Identity" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "v2i", nome: "V2I", categoria: "branding", ano: "20XX", destaque: false, galeria: 4,
+  { slug: "v2i", nome: "V2I", categoria: "branding", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Identidade Visual", en: "Visual Identity" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "memorial-brumadinho", nome: "Memorial Brumadinho", categoria: "branding", ano: "20XX", destaque: true, galeria: 4,
+  { slug: "memorial-brumadinho", nome: "Memorial Brumadinho", categoria: "branding", ano: "20XX", galeria: 4,
     local: { pt: "Brumadinho, MG", en: "Brumadinho, Brazil" },
     conceito: { pt: "Identidade Visual", en: "Visual Identity" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "amapa-40-anos", nome: "Uma gente que não para de sonhar – Amapá 40 anos", categoria: "editorial", ano: "20XX", destaque: false, galeria: 4,
+  { slug: "amapa-40-anos", nome: "Uma gente que não para de sonhar – Amapá 40 anos", categoria: "editorial", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Projeto Editorial", en: "Editorial Design" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "ipanema-queijos", nome: "Ipanema Queijos", categoria: "embalagem", ano: "20XX", destaque: true, galeria: 4,
+  { slug: "ipanema-queijos", nome: "Ipanema Queijos", categoria: "embalagem", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Embalagens", en: "Packaging" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
 
-  { slug: "livro-pardini", nome: "Uma história de estratégia com propósito – Hermes Pardini", categoria: "editorial", ano: "20XX", destaque: true, galeria: 4,
+  { slug: "livro-pardini", nome: "Uma história de estratégia com propósito – Hermes Pardini", categoria: "editorial", ano: "20XX", galeria: 4,
     local: { pt: "Cidade, UF", en: "City, Brazil" },
     conceito: { pt: "Projeto Editorial", en: "Editorial Design" },
     texto: { pt: "Parágrafo sobre o projeto: o desafio, a ideia e o que foi entregue.", en: "A paragraph about the project: the challenge, the idea and what was delivered." } },
